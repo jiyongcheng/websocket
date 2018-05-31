@@ -1,0 +1,42 @@
+<html>
+  <body>
+    <script>
+      const ws = new WebSocket("ws://localhost:12345");
+      let sendTimer = null;
+      let sendCount = 0;
+
+      ws.onopen = function() {
+        console.log("@open");
+
+        sendCount++;
+
+        ws.send("Hello Server!" + sendCount);
+
+        sendTimer = setInterval(function() {
+          sendCount++;
+
+          ws.send("Hi Server!" + sendCount);
+
+          if (sendCount === 10) {
+            ws.close();
+            clearInterval(sendTimer);
+          }
+        }, 2000);
+      };
+
+      ws.onmessage = function(e) {
+        console.log("@message");
+        console.log(e.data);
+      };
+
+      ws.onclose = function(e) {
+        console.log("@message");
+        console.log(e.data);
+      };
+
+      ws.onerror = function(e) {
+        console.log("@error");
+      };
+    </script>
+  </body>
+</html>
