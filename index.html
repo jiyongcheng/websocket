@@ -29,9 +29,9 @@
         console.log(e.data);
       };
 
-      ws.onclose = function(e) {
+      ws.onclose = function() {
         console.log("@message");
-        console.log(e.data);
+        sendTimer && clearInterval(sendTimer);
       };
 
       ws.onerror = function(e) {
